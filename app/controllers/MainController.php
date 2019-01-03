@@ -1,6 +1,6 @@
 <?php
 
-class MainController
+class MainController extends CoreController
 {
     // Page d'accueil
     public function home()
@@ -20,11 +20,11 @@ class MainController
         $this->show('terms-of-sales');
     }
 
-    private function show($viewName, $viewVars = [])
-    {
-        include __DIR__ . '/../views/header.tpl.php';
-        // inclusion de vues
-        include __DIR__ . '/../views/' . $viewName . '.tpl.php';
-        include __DIR__ . '/../views/footer.tpl.php';
-    }
+    // private function show($viewName, $viewVars = [])
+    // {
+    //     include __DIR__ . '/../views/header.tpl.php';
+    //     // inclusion de vues
+    //     include __DIR__ . '/../views/' . $viewName . '.tpl.php';
+    //     include __DIR__ . '/../views/footer.tpl.php';
+    // }
 }

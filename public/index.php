@@ -4,14 +4,15 @@
 // Inclusion de nos dépendances provenant de composer
 require __DIR__ . '/../vendor/autoload.php';
 
-require __DIR__.'/../Utils/DBData.php';
-
 include __DIR__ . '/../app/helper/path.php';
+
+include __DIR__ . '/../app/controllers/CoreController.php';
 include __DIR__ . '/../app/controllers/MainController.php';
 include __DIR__ . '/../app/controllers/CatalogController.php';
 include __DIR__ . '/../app/controllers/CartController.php';
 include __DIR__ . '/../app/controllers/ErrorController.php';
 
+require __DIR__.'/../Utils/DBData.php';
 include __DIR__ . '/../app/models/CoreModel.php';
 include __DIR__ . '/../app/models/Brand.php';
 include __DIR__ . '/../app/models/Category.php';
@@ -110,7 +111,7 @@ if ($match === false) {
 }
 
 // En PHP, on peut instancier une classe à partir d'une variable si elle contient un nom de classe existant
-$controller = new $controllerName();
+$controller = new $controllerName($router);
 
 // En PHP, on peut appeler une méthode à partir d'une variable si elle contient un nom de méthode existant dans l'instance que l'on manipule
 $controller->$methodName($match['params']);

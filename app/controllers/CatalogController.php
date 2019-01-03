@@ -1,6 +1,6 @@
 <?php
 
-class CatalogController
+class CatalogController extends CoreController
 {
     // $parameters contiendra la valeur de $match['params'] créée par AltoRouter
     public function getCategory($parameters)
@@ -9,7 +9,28 @@ class CatalogController
 
         $categoryId = $parameters['id'];
 
-        $this->show('category');
+        //dump($categoryId);
+
+        // Initialiser DBData
+        $dbData = new DBData;
+
+        // Récupérer les informations de la catégorie
+        $category = $dbData->getCategoryDetails($categoryId);
+
+        if ($category) {
+            //dump($category);
+
+            $this->show(
+                'category',
+                [
+                    'category' => $category
+                ]
+            );
+        } else {
+            // Erreur 404
+            http_response_code(404);
+            $this->show('404');
+        }
     }
 
     /*
@@ -31,14 +52,28 @@ class CatalogController
     {
         $productId = $parameters['id'];
 
-        $this->show('product');
-    }
+        $dbData = new DBData;
 
-    private function show($viewName, $viewVars = [])
-    {
-        include __DIR__ . '/../views/header.tpl.php';
-        // inclusion de vues
-        include __DIR__ . '/../views/' . $viewName . '.tpl.php';
-        include __DIR__ . '/../views/footer.tpl.php';
+        $product = $dbData->getProductDetails($productId);
+
+        // Je récupère l'ID de la marque associé à mon produit
+        $productBrandId = $product->getBrandId();
+
+        // Je récupère les informations de la marque associé à mon produit
+        $productBrand = $dbData->getBrandDetails($productBrandId);
+
+        $productCategoryId = $product->getCategoryId();
+        $productCategory = $dbData->getCategoryDetails($productCategoryId);
+
+        //dump($product, $productBrand, $productCategory);
+
+        $this->show(
+            'product',
+            [
+                'product' => $product,
+                'productBrand' => $productBrand,
+                'productCategory' => $productCategory,
+            ]
+        );
     }
 }

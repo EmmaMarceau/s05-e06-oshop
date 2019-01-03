@@ -41,17 +41,25 @@ class DBData {
      * @return Product
      */
     public function getProductDetails($productId) {
-        // TODO
-
         $productDetailsQuery = '
-        
-        SELECT product.*, brand.name AS brand_name, category.name as category_name
-        FROM product
-        JOIN brand ON brand.id = product.id_brand
-        JOIN category ON category.id = product.id_category
-        WHERE product.id='.$productId.'
+            SELECT
+                `id`,
+                `name`,
+                `description`,
+                `image`,
+                `price`,
+                `rate`,
+                `status`,
+                `created_at` AS \'createdAt\',
+                `updated_at` AS \'updatedAt\',
+                `category_id` AS \'categoryId\',
+                `type_id` AS \'typeId\',
+                `brand_id` AS \'brandId\'
+            FROM `product`
+            WHERE `product`.`id` = ' . $productId
+        ;
 
-        ';
+        //echo '<pre>' . $productDetailsQuery . '</pre>';
 
         $productDetailsQueryStatement = $this->dbh->query($productDetailsQuery);
 
@@ -62,11 +70,7 @@ class DBData {
 
         $product = $productDetailsQueryStatement->fetch();
 
-        dump($product);
-
         return $product;
-    
-
     }
 
     /**
@@ -78,23 +82,28 @@ class DBData {
     public function getCategoryDetails($categoryId) {
         // TODO
 
-        $categoryQuery = '
-	            SELECT *
-	            FROM  `category`
-	            WHERE id='.$categoryId.'
-                ';
+        $categoryDetails = '
+            SELECT
+            `id`,
+            `name`,
+            `description`,
+            `image`,
+            `order`,
+            `created_at` AS createdAt,
+            `updated_at` AS updatedAt
+            FROM `category`
+            WHERE `id` = ' . $categoryId
+                ;
                 
-        $categoryQueryStatement = $this->dbh->query($categoryQuery);
-
-        $categoryQueryStatement->setFetchMode(
+        $categoryDetailsQueryStatement = $this->dbh->query($categoryDetails);
+        // On dit comment on veut récupérer la donnée
+        $categoryDetailsQueryStatement->setFetchMode(
             PDO::FETCH_CLASS,
             'Category'
         );
 
-        $category = $categoryQueryStatement->fetch();
-
-        dump($category);
-
+        $category = $categoryDetailsQueryStatement->fetch();
+        
         return $category;
     
     }
@@ -128,7 +137,7 @@ class DBData {
 
         $brand = $brandDetailsQueryStatement->fetch();
 
-        dump($brand);
+    
 
         return $brand;
     }

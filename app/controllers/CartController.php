@@ -1,6 +1,6 @@
 <?php
 
-class CartController
+class CartController extends CoreController
 {
     public function getCart()
     {
@@ -45,11 +45,11 @@ class CartController
         header('Location: ' . $_SERVER['BASE_URI'] . '/mon-panier');
     }
 
-    private function show($viewName, $viewVars = [])
-    {
-        include __DIR__ . '/../views/header.tpl.php';
-        // inclusion de vues
-        include __DIR__ . '/../views/' . $viewName . '.tpl.php';
-        include __DIR__ . '/../views/footer.tpl.php';
-    }
+    // private function show($viewName, $viewVars = [])
+    // {
+    //     include __DIR__ . '/../views/header.tpl.php';
+    //     // inclusion de vues
+    //     include __DIR__ . '/../views/' . $viewName . '.tpl.php';
+    //     include __DIR__ . '/../views/footer.tpl.php';
+    // }
 }

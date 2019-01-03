@@ -1,6 +1,6 @@
 <?php
 
-class ErrorController
+class ErrorController extends CoreController
 {
     public function page404()
     {
@@ -8,11 +8,11 @@ class ErrorController
         $this->show('404');
     }
 
-    private function show($viewName, $viewVars = [])
-    {
-        include __DIR__ . '/../views/header.tpl.php';
-        // inclusion de vues
-        include __DIR__ . '/../views/' . $viewName . '.tpl.php';
-        include __DIR__ . '/../views/footer.tpl.php';
-    }
+    // private function show($viewName, $viewVars = [])
+    // {
+    //     include __DIR__ . '/../views/header.tpl.php';
+    //     // inclusion de vues
+    //     include __DIR__ . '/../views/' . $viewName . '.tpl.php';
+    //     include __DIR__ . '/../views/footer.tpl.php';
+    // }
 }
